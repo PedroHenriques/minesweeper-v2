@@ -23,12 +23,13 @@ install:
 before_script:
   - "sudo chown root /opt/google/chrome/chrome-sandbox"
   - "sudo chmod 4755 /opt/google/chrome/chrome-sandbox"
+  - npm run tsc
   - npm run build:prod
   - node server.js &
   - sleep 3
 
 script:
   - npm run lint
-  - npm run mocha -- test/unit/
-  - npm run mocha -- test/integration/
-  - npm run mocha -- test/e2e/
+  - npm run test -- test/unit/
+  - npm run test -- test/integration/
+  - npm run test -- test/e2e/
