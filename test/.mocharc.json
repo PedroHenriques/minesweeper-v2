@@ -1,0 +1,8 @@
+{
+  "checkLeaks": true,
+  "globals": [ "window", "BASE_URL" ],
+  "fullTrace": true,
+  "R": "min",
+  "timeout": 30000,
+  "recursive": true
+}

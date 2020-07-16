@@ -1,0 +1,257 @@
+@import url(http://fonts.googleapis.com/css?family=Roboto:500);
+
+$appPadding: 2vmin;
+$menuHeight: 7vh;
+$headerHeight: 9vh;
+
+* {
+	margin: 0px 0px;
+	padding: 0px 0px;
+  font-family: 'Roboto', Arial, sans-serif;
+  font-size: 20px;
+  box-sizing: border-box;
+  user-select: none;
+}
+
+p {
+  padding: 10px 0px;
+}
+
+#app {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  min-width: 400px;
+  min-height: 400px;
+  padding: $appPadding;
+}
+
+#game {
+  position: relative;
+  width: 100%;
+  height: calc(100% - #{$menuHeight});
+  overflow: auto;
+}
+
+#header {
+  position: relative;
+  padding: 0.5rem 0px;
+  width: 100%;
+  height: $headerHeight;
+  overflow: auto;
+}
+
+#game-timer,
+#mines-left,
+#lives {
+  position: relative;
+  float: left;
+  height: 100%;
+  min-width: 120px;
+
+  img {
+    border: 0;
+    height: 100%;
+    width: auto;
+    margin-right: 0.5rem;
+  }
+}
+
+#minefield {
+  $expertAdjustment: 30 / 16;
+
+  position: relative;
+  overflow: hidden;
+  display: grid;
+  
+  &.height-rf {
+    $height: calc(100vh - 2 * #{$appPadding} - #{$menuHeight} - #{$headerHeight});
+    width: $height;
+    height: $height;
+    
+    &.expert {
+      width: calc(#{$height} * #{$expertAdjustment});
+    }
+  }
+  
+  &.width-rf {
+    $width: calc(100vw - 2 * #{$appPadding});
+    width: $width;
+    height: $width;
+    
+    &.expert {
+      height: calc(#{$width} / #{$expertAdjustment});
+    }
+  }
+}
+
+div.notification-box {
+  position: absolute;
+  margin-top: $headerHeight;
+  width: 50%;
+  left: 25%;
+  top: 25%;
+  padding: 1rem;
+  z-index: 99;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+  font-weight: bold;
+  font-size: 1.5rem;
+  text-align: center;
+}
+
+#setup {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+#menu {
+  position: relative;
+  width: 100%;
+  height: $menuHeight;
+  overflow: auto;
+}
+
+#difficulty,
+#game-seed,
+#number-lives {
+  font-size: 0.75rem;
+  padding: 0.1rem;
+  margin-left: 0.5rem;
+}
+
+#flags-enabled {
+  transform: scale(1.5);
+}
+
+#number-lives {
+  width: 3rem;
+}
+
+#game-seed + img {
+  margin-left: 0.5rem;
+  height: 2.75rem;
+  cursor: pointer;
+}
+
+label[for="flags-enabled"] {
+  margin-left: 0.5rem;
+}
+
+#start-button,
+#new-game-button,
+#reset-game-button,
+#notification-ok {
+  position: relative;
+  float: left;
+  font-size: 0.75rem;
+  height: 100%;
+  max-height: 2rem;
+}
+
+#reset-game-button {
+  margin-left: 1rem;
+}
+
+.stylish-button {
+  cursor: pointer;
+  display: inline-block;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  border: 1px solid transparent;
+  padding-top: 0.375rem;
+  padding-bottom: 0.375rem;
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+  line-height: 1.5;
+  border-radius: 0.25rem;
+  transition: color .15s ease-in-out, background-color .15s ease-in-out,
+    border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+  color: rgb(255, 255, 255);
+  background-color: rgb(0, 123, 255);
+  border-color: rgb(0, 123, 255);
+
+  &:hover {
+    color: rgb(255, 255, 255);
+    background-color: rgb(0, 105, 217);
+    border-color: rgb(0, 98, 204);
+    text-decoration: none;
+  }
+
+  &:active {
+    color: rgb(255, 255, 255);
+    background-color: rgb(0, 98, 204);
+    border-color: rgb(0, 92, 191);
+    background-image: none;
+  }
+
+  &:focus {
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.5);
+    outline: 0;
+    text-decoration: none;
+  }
+
+  @media (max-height: 450px) {
+    padding: 0;
+  }
+}
+
+a.github-link {
+  margin-left: 3rem;
+
+  @media (max-width: 450px) {
+    margin-left: 0;
+    float: right;
+  }
+}
+
+.tile {
+  float: left;
+  border: solid black 0.05rem;
+  background-color: grey;
+  cursor: pointer;
+  text-shadow: -0.02rem -0.02rem 0 #000, 0.02rem -0.02rem 0 #000,
+    -0.02rem 0.02rem 0 #000, 0.02rem 0.02rem 0 #000;
+  font-weight: bold;
+  text-align: center;
+
+  span {
+    display: block;
+    padding: 22.5% 0%;
+
+    @media (max-width: 400px), (max-height: 500px) {
+      padding: 0;
+    }
+  }
+
+  &.last-in-row {
+    + .tile {
+      clear: left;
+    }
+  }
+
+  &.revealed { background-color: white; }
+
+  &.mine,
+  &.flag,
+  &.incorrect-flag {
+    background-size: 80%;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+
+  &.mine { background-image: url("#{$baseUrl}img/mine.png"); }
+  &.flag { background-image: url("#{$baseUrl}img/flag.png"); }
+  &.incorrect-flag { background-image: url("#{$baseUrl}img/incorrect-flag.png"); }
+
+  &.adjacent-1 { color: rgb(0, 0, 0); }
+  &.adjacent-2 { color: rgb(0, 0, 255); }
+  &.adjacent-3 { color: rgb(0, 150, 255); }
+  &.adjacent-4 { color: rgb(0, 255, 255); }
+  &.adjacent-5 { color: rgb(255, 255, 150); }
+  &.adjacent-6 { color: rgb(255, 255, 0); }
+  &.adjacent-7 { color: rgb(255, 150, 0); }
+  &.adjacent-8 { color: rgb(255, 0, 0); }
+}
